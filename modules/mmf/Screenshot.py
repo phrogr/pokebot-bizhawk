@@ -5,6 +5,7 @@ import mmap
 import cv2
 import numpy
 from PIL import Image
+from datetime import date
 
 from modules.Config import GetConfig
 
@@ -28,3 +29,17 @@ def GetScreenshot():
             if retry >= 5:
                 return None
             retry += 1
+
+def SaveShinyScreenshot(pokemon):
+    screenshot = GetScreenshot()
+    retry = 0
+    while True:
+        try:
+            cv2.imwrite(f"logs/screenshots/{date.today()} {pokemon['name']}.png", screenshot)
+            log.info(f"Saving screenshot...")
+            return None
+        except:
+            log.info("Saving screenshot failed, trying again...")
+            retry += 1
+            if retry == 3:
+                log.info("Failed to save screenshot")

@@ -14,6 +14,7 @@ from modules.Inputs import ReleaseAllInputs, PressButton, WaitFrames
 from modules.Menuing import CatchPokemon, FleeBattle, PickupItems, ResetGame, SaveGame, StartMenu, BattleOpponent, IsValidMove
 from modules.mmf.Pokemon import GetOpponent, GetParty
 from modules.mmf.Trainer import GetTrainer
+from modules.mmf.Screenshot import SaveShinyScreenshot
 
 log = logging.getLogger(__name__)
 config = GetConfig()
@@ -335,6 +336,7 @@ def EncounterPokemon(starter: bool = False):
     replace_battler = False
 
     if pokemon["shiny"]:
+        SaveShinyScreenshot(pokemon)
         if not starter and not legendary_hunt and config["catch_shinies"]:
             CatchPokemon()
         elif legendary_hunt:
